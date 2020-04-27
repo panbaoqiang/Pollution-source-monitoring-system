@@ -2,7 +2,7 @@
   <div :class="classObj" class="app-wrapper">
     <div style="background:#007BFB;width:100%;height:60px;position: fixed;z-index:1002">
       <div style="width:120px;height:100%;float:left">
-        <img src="./logo2.svg" style="margin-top:0px;width:120px;height:60px" />
+        <img src="./logo2.svg" style="margin-top:0px;width:120px;height:60px;opacity: 0.8;" />
       </div>
       <div style="width:300px;height:60px;float:left">
         <span style="color:white;line-height:60px;font-size:30px">污染源监测系统</span>
