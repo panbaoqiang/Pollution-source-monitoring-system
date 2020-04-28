@@ -26,18 +26,30 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.name
-      if (hasGetUserInfo) {
+      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      if (hasRoles) {
         next()
       } else {
         try {
           // get user info
-          await store.dispatch('user/getInfo')
-
-          next()
+          // 这个函数会设置role
+          let roles
+          await store.dispatch('user/getInfo').then(response => {
+            roles = response
+          })
+          console.log('登入用户的角色', roles)
+          // generate accessible routes map based on roles
+          // 没有给后端发请求,根据用户权限信息去遍历router,函数内两步，一步获取通用的路由，一步获取你自己该有的权限路由
+          const accessRoutes = await store.dispatch('permission/generateRoutes')
+          // dynamically add accessible routes
+          await router.addRoutes(accessRoutes)
+          // hack method to ensure that addRoutes is complete
+          // set the replace: true, so the navigation will not leave a history record
+          console.log('{ ...to, replace: true }', { ...to, replace: true })
+          next({ ...to, replace: true })
         } catch (error) {
           // remove token and go to login page to re-login
-          await store.dispatch('user/resetToken')
+          await store.dispatch('user/resetUser')
           Message.error(error || 'Has Error')
           next(`/login?redirect=${to.path}`)
           NProgress.done()

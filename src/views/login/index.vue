@@ -49,7 +49,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-
+import { Message } from 'element-ui'
 export default {
   name: 'Login',
   data() {
@@ -70,7 +70,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '123456'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -107,8 +107,13 @@ export default {
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
-          }).catch(() => {
+          }).catch((error) => {
             this.loading = false
+            Message({
+              message: error.message || 'Error',
+              type: 'error',
+              duration: 2 * 1000
+            })
           })
         } else {
           console.log('error submit!!')

@@ -10,7 +10,7 @@
       <div class="right-menu" style="line-height:60px;color:white;font-size:15px" >
         <screenfull id="screenfull" class="right-menu-item hover-effect" style="float:left;margin-right:20px"/>
          <i class="el-icon-s-check" style="float: left;line-height:60px;font-size:20px"/>
-        <span title="管理员15209854117" class="user">&nbsp;:&nbsp;管理员15209854117</span>
+        <span :title="name" class="user">&nbsp;:&nbsp;{{ name }}</span>
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
             <i class="el-icon-caret-bottom" />
@@ -63,7 +63,7 @@ export default {
   },
   mixins: [ResizeMixin],
   computed: {
-    ...mapGetters(["sidebar", "avatar"]),
+    ...mapGetters(["sidebar", "name"]),
     sidebar() {
       return this.$store.state.app.sidebar;
     },
@@ -182,7 +182,7 @@ export default {
 }
 .user{
   color:white;
-  width:100px;
+  max-width: 80px;
   display: block;
   overflow: hidden;
   white-space: nowrap;

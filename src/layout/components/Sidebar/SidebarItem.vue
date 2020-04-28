@@ -1,6 +1,6 @@
 <template>
   <div v-if="!item.hidden">
-    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
+    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||!onlyOneChild.children.length||hiddenAllChild(onlyOneChild.children)||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
           <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
@@ -57,8 +57,21 @@ export default {
     return {}
   },
   methods: {
+    hiddenAllChild(children) {
+      const hiddenChildren = children.filter(item => {
+        // 如果他设置隐藏了，就不会被显示出来
+        if (item.hidden) {
+          return true
+        } else {
+          return false
+        }
+      })
+      return hiddenChildren.length !== 0
+    },
     hasOneShowingChild(children = [], parent) {
+      // 这是一个过滤每一个父节点的函数
       const showingChildren = children.filter(item => {
+        // 如果他设置隐藏了，就不会被显示出来
         if (item.hidden) {
           return false
         } else {

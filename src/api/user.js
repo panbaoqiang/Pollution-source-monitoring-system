@@ -1,24 +1,33 @@
 import request from '@/utils/request'
 
-export function login(data) {
+export function loginAjax(data) {
   return request({
-    url: '/vue-admin-template/user/login',
+    url: '/user/login',
     method: 'post',
     data
   })
 }
 
-export function getInfo(token) {
+export function getInfoAjax(data) {
   return request({
-    url: '/vue-admin-template/user/info',
-    method: 'get',
-    params: { token }
+    url: '/user/getInfo',
+    method: 'post',
+    data
+  })
+}
+// 测试
+export function getAllUser(data) {
+  return request({
+    url: '/user/getAllUser',
+    method: 'post',
+    data
   })
 }
 
-export function logout() {
+export function getUserResource(data) {
   return request({
-    url: '/vue-admin-template/user/logout',
-    method: 'post'
+    url: '/user/getUserResource',
+    method: 'post',
+    data
   })
 }
