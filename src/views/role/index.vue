@@ -1,20 +1,11 @@
 <template>
   <div style="padding:20px">
     <el-row :gutter="10">
-      <el-col :span="4">
-        <el-card shadow="always" :body-style="{ padding: '25px' }">
-          <svg-icon icon-class="component" /><span style="margin-left:20px">角色管理</span>
-          <br>
-          <br>
-          <hr>
-          <el-tree :data="company" :props="defaultProps" style="margin-top:20px" @node-click="handleNodeClick" />
-        </el-card>
-      </el-col>
-      <el-col :span="20">
+      <el-col :span="24">
         <!-- 下面是我从表单里面获取的-->
-        <el-form :inline="true" :model="queryForm" class="demo-form-inline">
+        <el-form :inline="true" :model="queryForm" label-width="80px" class="demo-form-inline">
           <el-form-item label="角色名称">
-            <el-input v-model="queryForm.queryRoleName" style="width:200px" />
+            <el-input v-model="queryForm.queryRoleName" style="width:250px" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -31,6 +22,8 @@
           <el-link v-has="'assignUser'" type="primary" style="margin-left:20px" @click="multipleRoleAllocateUser"><i class="el-icon-s-check" />用户分配</el-link>
           <!-- 下面是我从资源表格里面获取的-->
           <el-table
+            v-loading="listLoading"
+            element-loading-text="Loading"
             ref="multipleTable"
             :data="currentPageRoles"
             tooltip-effect="dark"
@@ -117,6 +110,8 @@ export default {
   components: { ResourceAllocate, UserAllocate, RoleUpdate, RoleAdd },
   data() {
     return {
+      // 列表加载
+      listLoading: true,
       // 目前的页数
       startPage: 1,
       // 每页的大小
@@ -169,12 +164,19 @@ export default {
       startPage: this.startPage,
       pageSize: this.pageSize
     }
+    this.listLoading = true
     await store.dispatch('role/getCurrentPageRole', query).then(res => {
-      console.log('角色返回结果', res)
       this.currentPageRoles = res.data.list
       this.total = res.data.total
-    })
-    this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
+      this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
+      this.listLoading = false
+    }).catch(error => {
+           this.$message({
+              type: 'error',
+              message: error.message
+            })
+           setTimeout(() => { location.reload() }, 500)
+        })
   },
   methods: {
     // 创建一棵树
@@ -192,8 +194,13 @@ export default {
       this.assignRoleForResource = [scope.row]
       await store.dispatch('resource/getResourceTotalTree').then(res => {
         this.resourceList = this.createRouterTree(res.data)
-        console.log('资源树', this.resourceList)
-      })
+      }).catch(error => {
+           this.$message({
+              type: 'error',
+              message: error.message
+            })
+           setTimeout(() => { location.reload() }, 500)
+        })
       this.dialogResourceVisible = true
     },
     // 多选资源分配
@@ -205,9 +212,14 @@ export default {
         this.assignRoleForResource = this.multipleSelection
         await store.dispatch('resource/getResourceTotalTree').then(res => {
           this.resourceList = this.createRouterTree(res.data)
-          console.log('资源树', this.resourceList)
-        })
-        this.dialogResourceVisible = true
+          this.dialogResourceVisible = true
+        }).catch(error => {
+           this.$message({
+              type: 'error',
+              message: error.message
+            })
+           setTimeout(() => { location.reload() }, 500)
+        })  
       }
     },
     // 多选用户分配
@@ -219,13 +231,17 @@ export default {
         this.assignRoleForUser = this.multipleSelection
         await store.dispatch('user/getAllUser').then(res => {
           this.userList = res.data
-          console.log('用户', this.userList)
+          this.dialogUserVisible = true
+        }).catch(error => {
+           this.$message({
+              type: 'error',
+              message: error.message
+            })
+           setTimeout(() => { location.reload() }, 500)
         })
-        this.dialogUserVisible = true
       }
     },
     updateRole(scope) {
-      console.log(scope)
       this.updateRoleObj = scope.row
       this.dialogUpdateRoleVisible = true
     },
@@ -233,12 +249,9 @@ export default {
       return 'height:40px;'
     },
     handleNodeClick(data) {
-      alert('测试的，公司部分没做！')
-      console.log(data)
     },
     // 页面页数改变
     async changePage(currentPage) {
-      console.log(currentPage)
       this.startPage = currentPage
       const query = {
         startPage: this.startPage,
@@ -248,11 +261,20 @@ export default {
       if (this.isSelect) {
         query.name = this.queryForm.queryRoleName
       }
+      this.listLoading = true
       await store.dispatch('role/getCurrentPageRole', query).then(res => {
         this.currentPageRoles = res.data.list
         this.total = res.data.total
-      })
-      this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
+        this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
+        this.listLoading = false
+      }).catch(error => {
+           this.$message({
+              type: 'error',
+              message: error.message
+            })
+           setTimeout(() => { location.reload() }, 500)
+        })
+
     },
     async onSubmit() {
       // 属性为空
@@ -266,11 +288,20 @@ export default {
         pageSize: this.pageSize,
         name: this.queryForm.queryRoleName
       }
+      this.listLoading = true
       await store.dispatch('role/getCurrentPageRole', query).then(res => {
         this.currentPageRoles = res.data.list
         this.total = res.data.total
-      })
-      this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
+        this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
+        this.listLoading = false
+      }).catch(error => {
+           this.$message({
+              type: 'error',
+              message: error.message
+            })
+           setTimeout(() => { location.reload() }, 500)
+        })
+
     },
     async reset() {
       this.queryForm.queryRoleName = ''
@@ -280,28 +311,43 @@ export default {
         startPage: this.startPage,
         pageSize: this.pageSize
       }
+      this.listLoading = true
       await store.dispatch('role/getCurrentPageRole', query).then(res => {
         this.currentPageRoles = res.data.list
         this.total = res.data.total
-      })
-      this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
+        this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
+        this.listLoading = false
+      }).catch(error => {
+           this.$message({
+              type: 'error',
+              message: error.message
+            })
+           setTimeout(() => { location.reload() }, 500)
+        })
     },
     handleSelectionChange(val) {
       this.multipleSelection = val
     },
     deleteRole(scope) {
-      console.log(scope)
       this.$confirm('此操作将永久删除该角色, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async() => {
-        await store.dispatch('role/deleteRole', { id: scope.row.id })
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
+        await store.dispatch('role/deleteRole', { id: scope.row.id }).then(() =>{
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            setTimeout(() => { location.reload() }, 500)
+        }).catch(error => {
+           this.$message({
+              type: 'error',
+              message: error.message
+            })
+           setTimeout(() => { location.reload() }, 500)
         })
-        setTimeout(() => { location.reload() }, 500)
+
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -316,7 +362,6 @@ export default {
         const idsList = this.multipleSelection.map((item) => {
           return item.id
         })
-        console.log(idsList)
         this.$confirm('此操作将永久删除该批角色, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -330,6 +375,7 @@ export default {
             setTimeout(() => { location.reload() }, 500)
           }).catch(error => {
             this.$message.error(error.message)
+             setTimeout(() => { location.reload() }, 500)
           })
         }).catch(() => {
           this.$message({
@@ -378,7 +424,7 @@ export default {
 .el-table__header tr,
   .el-table__header th {
     padding: 0;
-    height: 50px;
+    height: 40px;
 }
 .el-table__body tr,
   .el-table__body td {

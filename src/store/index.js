@@ -6,6 +6,7 @@ import settings from './modules/settings'
 import user from './modules/user'
 import permission from './modules/permission'
 import resource from './modules/resource'
+import role from './modules/role'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -14,7 +15,8 @@ const store = new Vuex.Store({
     settings,
     user,
     permission,
-    resource
+    resource,
+    role
   },
   getters
 })

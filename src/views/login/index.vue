@@ -61,8 +61,8 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+      if (!validUsername(value)) {
+        callback(new Error('Please enter the correct password!'))
       } else {
         callback()
       }
@@ -116,7 +116,6 @@ export default {
             })
           })
         } else {
-          console.log('error submit!!')
           return false
         }
       })

@@ -4,7 +4,7 @@
       <el-row :gutter="20">
         <el-col :span="24" :offset="1" style="height:50px">
           <span>已选中用户：</span>
-          <span v-for="(item) in userList" :key="item.id" style="color:#F56C6C">({{ item.code }}--{{ item.name }})</span>
+          <span v-for="(item) in userList" :key="item.id" style="color:#F56C6C">({{ item.username }}--{{ item.name }})</span>
         </el-col>
       </el-row>
       <el-row :gutter="20">
@@ -93,7 +93,6 @@ export default {
       }).then(async() => {
         // 这里需要就是删除资源
         await store.dispatch('user/assignUserForRole', { userIdList: this.userIdList, roleIdList: this.value }).then(res => {
-          console.log(res)
           this.$message({
             type: 'success',
             message: res.message
@@ -103,6 +102,9 @@ export default {
           }, 500)
         }).catch(error => {
           this.$message.error(error.message)
+           setTimeout(() => {
+            location.reload()
+          }, 500)
         })
       }).catch(() => {
         this.$message({

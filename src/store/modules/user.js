@@ -1,7 +1,6 @@
-import { loginAjax, getInfoAjax,getAllUser } from '@/api/user'
+import { clearUserRoleByUserId, clearUserRoleByUserIdList, loginAjax, getInfoAjax,getAllUser, getCurrentPageUser,assignUserForRole, updateUser, deleteUser, deleteMultipleUser, addUser } from '@/api/user'
 import { getToken, setToken, removeToken, getName, setName, removeName, getOperatorId, setOperatorId, removeOperatorId } from '@/utils/auth'
 import { resetRouter } from '@/router'
-
 const state = {
     // 三个都是放在本地的store,刷新也可以保存
     // 这个是token验证
@@ -69,7 +68,6 @@ const actions = {
     }
     return new Promise((resolve, reject) => {
       getInfoAjax(parm).then(response => {
-        console.log('response', response)
         const { data } = response
         const roles = !data || data.length === 0 ? ['VISITOR'] : data
         commit('SET_ROLES', roles)
@@ -91,6 +89,7 @@ const actions = {
         commit('SET_NAME', [])
         commit('SET_OPERATOR_ID', '')
         commit('SET_ROLES', '')  
+        location.reload()
         resolve()
     })
   },
@@ -119,6 +118,169 @@ const actions = {
       })
     })
   },
+    // 接下来是用户管理了
+  // 根据页数查询条件
+  getCurrentPageUser({ commit, state }, query) {
+    const parm = {
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
+      operatorId: state.operatorId,
+      startPage: query.startPage,
+      pageSize: query.pageSize,
+      data: {
+        name: query.name,
+        username: query.username
+      }
+    }
+    return new Promise((resolve, reject) => {
+      getCurrentPageUser(parm).then(response => {
+        resolve(response)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
+      })
+    })
+  },
+  updateUser({ commit, state }, query) {
+    const parm = {
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
+      operatorId: state.operatorId,
+      data: {
+        id: query.id,
+        username: query.username,
+        name: query.name,
+        password: query.password,
+        tel: query.tel,
+        remark: query.remark,
+        status: query.status,
+        version: query.version
+      }
+    }
+    return new Promise((resolve, reject) => {
+      updateUser(parm).then(response => {
+        resolve(response)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
+      })
+    })
+  },
+  deleteMultpleUser({ commit, state }, query) {
+    const parm = {
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
+      operatorId: state.operatorId,
+      data: {
+        userIdList: query.userIdList
+      }
+    }
+    return new Promise((resolve, reject) => {
+      deleteMultipleUser(parm).then(response => {
+        resolve(response)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
+      })
+    })
+  },
+  deleteUser({ commit, state }, query) {
+    const parm = {
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
+      operatorId: state.operatorId,
+      data: {
+        id: query.id
+      }
+    }
+    return new Promise((resolve, reject) => {
+      deleteUser(parm).then(response => {
+        resolve(response)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
+      })
+    })
+  },
+  addUser({ commit, state }, query) {
+    const parm = {
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
+      operatorId: state.operatorId,
+      data: {
+        username: query.username,
+        name: query.name,
+        password: query.password,
+        tel: query.tel,
+        remark: query.remark,
+        status: query.status,
+        version: query.version
+      }
+    }
+    return new Promise((resolve, reject) => {
+      addUser(parm).then(response => {
+        resolve(response)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
+      })
+    })
+  },
+  assignUserForRole({ commit, state }, query) {
+    const parm = {
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
+      operatorId: state.operatorId,
+      data: {
+        userIdList: query.userIdList,
+        roleIdList: query.roleIdList
+      }
+    }
+    return new Promise((resolve, reject) => {
+      assignUserForRole(parm).then(response => {
+        resolve(response)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
+      })
+    })
+  },
+  clearUserRoleByUserIdList({ commit }, query) {
+    const parm = {
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
+      operatorId: getOperatorId(),
+      data: {
+        userIdList: query.userIdList
+      }
+    }
+    return new Promise((resolve, reject) => {
+      clearUserRoleByUserIdList(parm).then(res => {
+        resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
+      })
+    })
+  },
+  clearUserRoleByUserId({ commit }, query) {
+    const parm = {
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
+      operatorId: getOperatorId(),
+      data: {
+        id: query.id
+      }
+    }
+    return new Promise((resolve, reject) => {
+      clearUserRoleByUserId(parm).then(res => {
+        resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
+      })
+    })
+  }
 }
 
 export default {

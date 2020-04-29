@@ -84,7 +84,6 @@ export default {
     // 根据用户集合返回用户的id数组
     // 确定更改
     onSubmit() {
-      console.log(this.value)
       if (this.value.length === 0) {
         this.$message.error('未选择任何用户,无法给角色批量赋予用户')
         return
@@ -101,7 +100,6 @@ export default {
         })
         // 这里需要就是删除资源
         await store.dispatch('role/assignRoleForUser', { userIds: this.value, roleIdList: roleIdArr }).then(res => {
-          console.log(res)
           this.$message({
             type: 'success',
             message: res.message
@@ -111,6 +109,9 @@ export default {
           }, 500)
         }).catch(error => {
           this.$message.error(error.message)
+           setTimeout(() => {
+            location.reload()
+          }, 500)
         })
       }).catch(() => {
         this.$message({

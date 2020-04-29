@@ -1,4 +1,4 @@
-import { getAllResource, getResourceByPage, deleteMultResource, deleteResource, udpateResource, AddResource } from '@/api/resource'
+import { getAllMenuResource, getAllComponent, getAllResource, getResourceByPage, deleteMultResource, deleteResource, udpateResource, AddResource } from '@/api/resource'
 const state = {}
 import { getOperatorId } from '@/utils/auth'
 
@@ -12,10 +12,12 @@ const actions = {
       browserType: navigator.appName.toLowerCase(),
       data: {}
     }
-    return new Promise(resolve => {
+    return new Promise((resolve, reject)  => {
       getAllResource(parm).then(res => {
-        console.log('后台返回资源列表数据Dataxxx', res)
         resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
       })
     })
   },
@@ -31,10 +33,12 @@ const actions = {
         id: query.id
       }
     }
-    return new Promise(resolve => {
+    return new Promise((resolve, reject)  => {
       getResourceByPage(parm).then(res => {
-        console.log('当前页面的数据为', res)
         resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
       })
     })
   },
@@ -47,10 +51,12 @@ const actions = {
         resourceIdList: query.resourceIdList
       }
     }
-    return new Promise(resolve => {
+    return new Promise((resolve, reject)  => {
       deleteMultResource(parm).then(res => {
-        console.log('后台返回资源列表数据Data', res)
         resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
       })
     })
   },
@@ -63,10 +69,12 @@ const actions = {
         id: query.id
       }
     }
-    return new Promise(resolve => {
+    return new Promise((resolve, reject)  => {
       deleteResource(parm).then(res => {
-        console.log('后台返回数据Data', res)
         resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
       })
     })
   },
@@ -90,10 +98,12 @@ const actions = {
         version: query.version
       }
     }
-    return new Promise(resolve => {
+    return new Promise((resolve, reject)  => {
       udpateResource(parm).then(res => {
-        console.log('更新资源后台返回', res)
         resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
       })
     })
   },
@@ -113,13 +123,45 @@ const actions = {
         component: query.component
       }
     }
-    return new Promise(resolve => {
+    return new Promise((resolve, reject)  => {
       AddResource(parm).then(res => {
-        console.log('添加资源后台返回', res)
         resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
       })
     })
-  }
+  },
+  getAllComponent({ commit }) {
+    const parm = {
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
+      operatorId: getOperatorId(),
+    }
+    return new Promise((resolve, reject)  => {
+      getAllComponent(parm).then(res => {
+        resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
+      })
+    })
+  },
+  getAllMenuResource({ commit }) {
+    const parm = {
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
+      operatorId: getOperatorId(),
+    }
+    return new Promise((resolve, reject)  => {
+      getAllMenuResource(parm).then(res => {
+        resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
+      })
+    })
+  },
 }
 export default {
   namespaced: true,

@@ -66,9 +66,7 @@ export default {
   },
   methods: {
     async submitForm() {
-      console.log('add', this.roleForm)
       await store.dispatch('role/addRole', this.roleForm).then(res => {
-        console.log(res)
         this.$message({
           type: 'success',
           message: res.message

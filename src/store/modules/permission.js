@@ -14,7 +14,6 @@ const mutations = {
     state.addRoutes = routes
     // permisson的router一定是增加了所有的可视化的组件
     state.routes = constantRoutes.concat(routes)
-    console.log('state.route', state.routes)
   }
 }
 
@@ -29,16 +28,12 @@ const actions = {
     }
     return new Promise(resolve => {
       getUserResource(parm).then(res => {
-        console.log('后台返回资源列表数据Data', res)
         const routerTree = createRouterTree(!res.data ? [] : res.data)
-        console.log('根据资源列表生成的树', routerTree)
         let accessedRoutes = createRouter(routerTree)
-        console.log('根据树生成的routeConfig', accessedRoutes)
         // accessedRoutes = accessedRoutes.concat(asyncRoutes)
         // 我在做两步，第一步
         // 先做那个子路由跳转，导航栏不更新
         accessedRoutes = accessedRoutes.concat(asyncRoutes)
-        console.log('最终', accessedRoutes)
         commit('SET_ROUTES', accessedRoutes)
         resolve(accessedRoutes)
       })
@@ -92,7 +87,6 @@ const actions = {
 // 先把后端的数据列表他弄成树
 // 类型三这种路由不适合权限按钮的路由界面的，因为此时路由已经刷新，节点变了
 function createRouterTree(routerList) {
-  console.log('routerList', routerList)
   const cloneData = JSON.parse(JSON.stringify(routerList))
   const data = cloneData.filter(father => {
     const branchArr = cloneData.filter(child => father.id === child.parentId)

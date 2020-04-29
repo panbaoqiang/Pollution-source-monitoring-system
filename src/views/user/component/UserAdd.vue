@@ -5,8 +5,8 @@
       <hr>
       <el-form ref="ruleForm" :model="userForm" label-width="100px" class="demo-ruleForm">
         <el-row :gutter="50">
-          <el-col :span="8" :offset="4"><el-form-item label="用户工号" prop="code">
-            <el-input v-model="userForm.code" style="width:250px" />
+          <el-col :span="8" :offset="4"><el-form-item label="用户账号" prop="username">
+            <el-input v-model="userForm.username" style="width:250px" />
           </el-form-item>
           </el-col>
         </el-row>
@@ -78,7 +78,7 @@ export default {
   data() {
     return {
       userForm: {
-        code: '',
+        username: '',
         password: '',
         name: '',
         tel: '',
@@ -89,9 +89,7 @@ export default {
   },
   methods: {
     async submitForm() {
-      console.log('update', this.userForm)
       await store.dispatch('user/addUser', this.userForm).then(res => {
-        console.log(res)
         this.$message({
           type: 'success',
           message: res.message

@@ -7,28 +7,25 @@ const actions = {
   // 获取资源树,已完成
   getAllRole({ commit }) {
     const parm = {
-      version: '0.0.1',
-      serviceType: 'role-queryAll',
-      deviceId: navigator.userAgent.toLowerCase(),
-      deviceType: 0,
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
       operatorId: getOperatorId(),
       data: {}
     }
-    console.log('参数：', parm)
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       getAllRole(parm).then(res => {
-        console.log('后台返回角色列表数据Data', res)
         resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
       })
     })
   },
   // 获取当前页的角色
   getCurrentPageRole({ commit }, query) {
     const parm = {
-      version: '0.0.1',
-      serviceType: 'role-currentPageQuery',
-      deviceId: navigator.userAgent.toLowerCase(),
-      deviceType: 0,
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
       operatorId: getOperatorId(),
       startPage: query.startPage,
       pageSize: query.pageSize,
@@ -36,56 +33,55 @@ const actions = {
         name: query.name
       }
     }
-    console.log('参数：', parm)
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       getCurrentPageRole(parm).then(res => {
-        console.log('后台返回角色列表数据Data', res)
         resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
       })
     })
   },
   deleteRole({ commit }, query) {
     const parm = {
-      version: '0.0.1',
-      serviceType: 'role-delete',
-      deviceId: navigator.userAgent.toLowerCase(),
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
       operatorId: getOperatorId(),
-      deviceType: 0,
       data: {
         id: query.id
       }
     }
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       deleteRole(parm).then(res => {
-        console.log('删除单个角色后数据Data', res)
         resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
       })
     })
   },
   deleteMultipleRole({ commit }, query) {
     const parm = {
-      version: '0.0.1',
-      serviceType: 'role-deleteMult',
-      deviceId: navigator.userAgent.toLowerCase(),
-      deviceType: 0,
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
       operatorId: getOperatorId(),
       data: {
         roleIdList: query.roleIdList
       }
     }
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       deleteMultipleRole(parm).then(res => {
-        console.log('批量删除角色后：', res)
         resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
       })
     })
   },
   updateRole({ commit }, query) {
     const parm = {
-      version: '0.0.1',
-      serviceType: 'role-update',
-      deviceId: navigator.userAgent.toLowerCase(),
-      deviceType: 0,
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
       operatorId: getOperatorId(),
       data: {
         id: query.id,
@@ -95,19 +91,19 @@ const actions = {
         version: query.version
       }
     }
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       updateRole(parm).then(res => {
-        console.log('更改角色后：', res)
         resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
       })
     })
   },
   addRole({ commit }, query) {
     const parm = {
-      version: '0.0.1',
-      serviceType: 'role-add',
-      deviceId: navigator.userAgent.toLowerCase(),
-      deviceType: 0,
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
       operatorId: getOperatorId(),
       data: {
         name: query.name,
@@ -115,48 +111,50 @@ const actions = {
         status: query.status
       }
     }
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       addRole(parm).then(res => {
-        console.log('添加角色后：', res)
         resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
       })
     })
   },
   assignRoleForResource({ commit }, query) {
     const parm = {
-      version: '0.0.1',
-      serviceType: 'role-roleAllocateResource',
-      deviceId: navigator.userAgent.toLowerCase(),
-      deviceType: 0,
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
       operatorId: getOperatorId(),
       data: {
         roleIdList: query.roleIdList,
         resourceIds: query.resourceIds
       }
     }
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       assignRoleForResource(parm).then(res => {
-        console.log('角色赋予资源后', res)
         resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
       })
     })
   },
   assignRoleForUser({ commit }, query) {
     const parm = {
-      version: '0.0.1',
-      serviceType: 'role-roleAllocateUser',
-      deviceId: navigator.userAgent.toLowerCase(),
-      deviceType: 0,
+      platform: navigator.platform.toLowerCase(),
+      browserType: navigator.appName.toLowerCase(),
       operatorId: getOperatorId(),
       data: {
         roleIdList: query.roleIdList,
         userIds: query.userIds
       }
     }
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       assignRoleForUser(parm).then(res => {
-        console.log('角色赋予用户后', res)
         resolve(res)
+      }).catch(error => {
+        // 在拦截器里面的错误直接向上传递
+        reject(error)
       })
     })
   }

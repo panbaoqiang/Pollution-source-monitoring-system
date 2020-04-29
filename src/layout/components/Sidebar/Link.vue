@@ -18,7 +18,6 @@ export default {
   },
   methods: {
     linkProps(url) {
-      console.log('LINK.VUE => linkProps() =>', url)
       if (isExternal(url)) {
         return {
           is: 'a',

@@ -43,3 +43,19 @@ export function AddResource(data) {
     data
   })
 }
+
+export function getAllComponent(data) {
+  return request({
+    url: '/component/getAllComponent',
+    method: 'post',
+    data
+  })
+}
+
+export function getAllMenuResource(data) {
+  return request({
+    url: '/resource/getAllMenuResource',
+    method: 'post',
+    data
+  })
+}

@@ -37,7 +37,6 @@ router.beforeEach(async(to, from, next) => {
           await store.dispatch('user/getInfo').then(response => {
             roles = response
           })
-          console.log('登入用户的角色', roles)
           // generate accessible routes map based on roles
           // 没有给后端发请求,根据用户权限信息去遍历router,函数内两步，一步获取通用的路由，一步获取你自己该有的权限路由
           const accessRoutes = await store.dispatch('permission/generateRoutes')
@@ -45,7 +44,6 @@ router.beforeEach(async(to, from, next) => {
           await router.addRoutes(accessRoutes)
           // hack method to ensure that addRoutes is complete
           // set the replace: true, so the navigation will not leave a history record
-          console.log('{ ...to, replace: true }', { ...to, replace: true })
           next({ ...to, replace: true })
         } catch (error) {
           // remove token and go to login page to re-login
@@ -64,7 +62,7 @@ router.beforeEach(async(to, from, next) => {
       next()
     } else {
       // other pages that do not have permission to access are redirected to the login page.
-      next(`/login?redirect=${to.path}`)
+      next(`/login`)
       NProgress.done()
     }
   }

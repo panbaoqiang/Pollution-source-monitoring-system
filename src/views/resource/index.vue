@@ -2,12 +2,13 @@
   <div>
     <el-row :gutter="10">
       <el-col :span="4" style="font-size:13px">
-        <el-card shadow="always" :body-style="{ padding: '20px' }">
+        <el-card shadow="always" :body-style="{ padding: '10px' }">
           <svg-icon icon-class="component" /><span style="margin-left:20px">资源管理</span>
           <br>
-          <br>
           <hr>
-          <el-tree node-key="id" :data="resource" :props="defaultProps" style="margin-top:20px;font-size:12px" @node-click="handleNodeClick" />
+          <el-scrollbar style="height:380px;">
+              <el-tree node-key="id" :data="resource" :props="defaultProps" style="margin-top:20px;font-size:12px" @node-click="handleNodeClick" />
+          </el-scrollbar>
         </el-card>
       </el-col>
       <el-col :span="20">
@@ -210,7 +211,6 @@ export default {
         } else {
           this.sonNode = []
         }
-        console.log('son', this.sonNode)
       }
     }
   },
@@ -218,27 +218,27 @@ export default {
     // 获取一棵树
     await store.dispatch('resource/getResourceTotalTree').then(res => {
       this.resource = this.createRouterTree(res.data)
-      console.log('资源树', this.resource)
-    })
+    }).catch(error => {
+            this.$message.error(error.message)
+      })
     // 默认获取当前列表,不需要任何父级资源id
     const query = {
       startPage: this.startPage,
       pageSize: this.pageSize
     }
-    console.log('参数', query)
     this.listLoading = true
     await store.dispatch('resource/getResourceByCondition', query).then(res => {
-      console.log('赶回结果', res)
       this.resourceCurrentList = res.data.list
       this.total = res.data.total
-    })
+    }).catch(error => {
+            this.$message.error(error.message)
+          })
     this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
     this.listLoading = false
   },
   methods: {
     // 页面改变
     async changePage(currentPage) {
-      console.log(currentPage)
       this.startPage = currentPage
       const query = {
         startPage: this.startPage,
@@ -252,7 +252,9 @@ export default {
       await store.dispatch('resource/getResourceByCondition', query).then(res => {
         this.resourceCurrentList = res.data.list
         this.total = res.data.total
-      })
+      }).catch(error => {
+            this.$message.error(error.message)
+          })
       this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
       this.listLoading = false
     },
@@ -270,7 +272,9 @@ export default {
       await store.dispatch('resource/getResourceByCondition', query).then(res => {
         this.resourceCurrentList = res.data.list
         this.total = res.data.total
-      })
+      }).catch(error => {
+            this.$message.error(error.message)
+          })
       this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
       this.listLoading = false
     },
@@ -289,7 +293,6 @@ export default {
       return 'height:40px;'
     },
     handleNodeClick(data) {
-      console.log(data)
     },
     async onSubmit() {
       if (!this.resourceForm.parent) {
@@ -302,13 +305,13 @@ export default {
         pageSize: this.pageSize,
         id: this.resourceForm.son || this.resourceForm.parent || '0'
       }
-      console.log('xxxxxxxx', query)
       this.listLoading = true
       await store.dispatch('resource/getResourceByCondition', query).then(res => {
-        console.log('yyyyyyyyy', res)
         this.resourceCurrentList = res.data.list
         this.total = res.data.total
-      })
+      }).catch(error => {
+            this.$message.error(error.message)
+          })
       this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
       this.listLoading = false
     },
@@ -316,7 +319,6 @@ export default {
       this.multipleSelection = val
     },
     updateResource(scope) {
-      console.log('updateRescource', scope)
       this.updateResourceObj = scope.row
       this.dialogUpdateResourceVisible = true
     },
@@ -327,19 +329,22 @@ export default {
         const idsList = this.multipleSelection.map((item) => {
           return item.id
         })
-        console.log(idsList)
         this.$confirm('此操作将永久删除该批资源, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(async() => {
           // 这里需要就是删除资源
-          await store.dispatch('resource/deleteMultResource', { resourceIdList: idsList })
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
+          await store.dispatch('resource/deleteMultResource', { resourceIdList: idsList }).then(() => {
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
+              setTimeout(() => { location.reload() }, 500)
+          }).catch(error => {
+              this.$message.error(error.message)
+              setTimeout(() => { location.reload() }, 500)
           })
-          setTimeout(() => { location.reload() }, 500)
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -349,18 +354,21 @@ export default {
       }
     },
     deleteResource(scope) {
-      console.log(scope)
       this.$confirm('此操作将永久删除该资源, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async() => {
-        await store.dispatch('resource/deleteResource', { id: scope.row.id })
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        })
-        setTimeout(() => { location.reload() }, 500)
+        await store.dispatch('resource/deleteResource', { id: scope.row.id }).then(() => {
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
+              setTimeout(() => { location.reload() }, 500)
+          }).catch(error => {
+              this.$message.error(error.message)
+              setTimeout(() => { location.reload() }, 500)
+          })
       }).catch(() => {
         this.$message({
           type: 'info',

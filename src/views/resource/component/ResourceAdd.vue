@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog :visible.sync="dialogAddResourceVisible" :show-close="false" :close-on-click-modal="false">
+    <el-dialog :visible.sync="dialogAddResourceVisible" :show-close="false" :close-on-click-modal="false"  >
       <span style="font-size:20px"><i class="el-icon-menu" />新增资源</span>
       <hr>
       <el-form ref="ruleForm" :model="resource" label-width="100px" class="demo-ruleForm">
@@ -13,14 +13,32 @@
         <el-row :gutter="50">
           <el-col :span="8" :offset="4">
             <el-form-item label="节点组件" prop="component">
-              <el-input v-model="resource.component" style="width:250px" />
+                <el-select v-model="resource.component" placeholder="请选择组件" style="width:250px">
+                  <el-option
+                    v-for="item in componentOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                   <span style="float: left">{{ item.label }}</span>
+                   <span :title="item.value" style="max-width: 150px;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                  </el-option>
+                </el-select>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="50">
           <el-col :span="8" :offset="4">
             <el-form-item label="父亲节点" prop="parentId">
-              <el-input v-model="resource.parentId" style="width:250px" />
+               <el-select v-model="resource.parentId" placeholder="请选择父亲资源菜单" style="width:250px">
+                  <el-option
+                    v-for="item in parentOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                   <span style="float: left">{{ item.label }}</span>
+                   <span :title="item.value" style="max-width: 150px;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                  </el-option>
+                </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -32,9 +50,13 @@
           </el-col>
         </el-row>
         <el-row :gutter="50">
-          <el-col :span="8" :offset="4"><el-form-item label="图标" prop="icon">
-            <el-input v-model="resource.icon" style="width:250px" />
-          </el-form-item>
+          <el-col :span="9" :offset="4">
+              <el-form-item label="图标" prop="icon">
+                <el-input v-model="resource.icon" style="width:150px" /> 
+              </el-form-item>
+          </el-col>
+          <el-col :span="4">
+                 <el-button @click="openIcon" style="width:100px;height:40px"></el-button>
           </el-col>
         </el-row>
         <el-row :gutter="50">
@@ -75,12 +97,39 @@
           </el-col>
         </el-row>
       </el-form>
+            <el-dialog
+                :append-to-body="true"
+                title="图标"
+                :visible.sync="dialogVisible"
+                width="50%"
+                :before-close="handleClose">
+              <el-scrollbar style="height:250px;">
+                <div class="icons-container">
+                      <div class="grid">
+                        <div v-for="item of svgIcons" :key="item" @click="handleClipboard(item,$event)">
+                          <el-tooltip placement="top">
+                            <div slot="content">
+                              {{ item }}
+                            </div>
+                            <div class="icon-item">
+                              <svg-icon :icon-class="item" class-name="disabled" />
+                            </div>
+                          </el-tooltip>
+                        </div>
+                      </div>
+                </div>
+                </el-scrollbar>
+              </el-dialog>
+          
+
     </el-dialog>
   </div>
 </template>
 
 <script>
 import store from '@/store'
+import clipboard from '@/utils/clipboard'
+import svgIcons from './svg-icons'
 export default {
   name: 'ResourceAdd',
   props: {
@@ -91,6 +140,10 @@ export default {
   },
   data() {
     return {
+      svgIcons,
+      dialogVisible: false,
+      componentOptions: [],
+      parentOptions: [],
       resourceType: [{
         value: 1,
         label: '菜单'
@@ -100,34 +153,132 @@ export default {
       }
       ],
       resource: {
-        name: '添加测试的菜单资源',
-        component: 'resource',
-        parentId: '0',
-        path: '/test2',
-        icon: 'international',
+        name: '',
+        component: '',
+        parentId: '',
+        path: '/',
+        icon: '',
         resourceType: '',
-        remark: '测试的资源菜单',
+        remark: '',
         leaf: 1
       }
     }
   },
   methods: {
     submitForm() {
-      console.log(this.resource)
-      store.dispatch('resource/AddResource', this.resource)
-      this.$message({
-        type: 'success',
-        message: '添加成功!'
+      store.dispatch('resource/AddResource', this.resource).then(() => {
+          this.$message({
+            type: 'success',
+            message: '添加成功!'
+          })
+          setTimeout(() => { location.reload() }, 500)
+      }).catch(error => {
+            this.$message({
+              type: 'error',
+              message: error.message
+            })
+            setTimeout(() => { location.reload() }, 500)
       })
-      setTimeout(() => { location.reload() }, 500)
     },
     CloseForm() {
       this.$emit('closeDialogAddResourceVisible')
+    },
+    resetResource(){
+        this.resource.name ='',
+        this.resource.component='',
+        this.resource.parentId='',
+        this.resource.path = '',
+        this.resource.icon = '',
+        this.resource.resourceType = '',
+        this.resource.remark = '',
+        this.resource.leaf = 1
+    },
+   handleClipboard(text, event) {
+     this.resource.icon = text
+     this.dialogVisible = false
+    },
+      handleClose(done) {
+         done();
+      },
+    openIcon(){
+      this.dialogVisible = true;
     }
-  }
+  },
+  watch:{
+    dialogAddResourceVisible:async function(newVal,oldVal) {
+        if(newVal){ 
+        this.resetResource()
+        await store.dispatch('resource/getAllComponent').then(res => {
+            const newConponent = res.data.map(item => {
+              return {
+                label: item.name,
+                value: item.component
+              }
+            })
+            this.componentOptions = newConponent
+        }).catch(error => {
+            this.$message({
+              type: 'error',
+              message: error.message
+            })
+            setTimeout(() => { location.reload() }, 500)
+         })
+
+         
+        await store.dispatch('resource/getAllMenuResource').then(res => {
+            const newParentMenu = res.data.map(item => {
+              return {
+                label: item.name,
+                value: item.id
+              }
+            })
+            newParentMenu.push({
+               label: "顶层菜单",
+                value: "0"
+            })
+            this.parentOptions = newParentMenu
+        }).catch(error => {
+            this.$message({
+            type: 'error',
+              message: error.message
+          })
+          setTimeout(() => { location.reload() }, 500)
+       })
+    }
+    }
+ }
 }
 </script>
 
 <style lang="scss">
+.icons-container {
+  margin: 0;
+  overflow: hidden;
+  .grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  }
 
+  .icon-item {
+    margin: 20px;
+    height: 60px;
+    text-align: center;
+    width: 20px;
+    float: left;
+    font-size: 25px;
+    color: #24292e;
+    cursor: pointer;
+  }
+
+  span {
+    display: block;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .disabled {
+    pointer-events: none;
+  }
+}
 </style>

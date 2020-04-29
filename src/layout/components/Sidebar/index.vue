@@ -36,26 +36,21 @@ export default {
       // :default-active="activeMenu"，
       // 他也是一个计算属性，当this.$route改变的时候他就变了
       const route = this.$route
-      console.log('INDEX.VUE => activeMenu() =>', route)
       const { meta, path } = route
       // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
-        console.log('this.$route.meta.activeMenu', meta.activeMenu)
         return meta.activeMenu
       }
       return path
     },
     showLogo() {
-      console.log('INDEX.VUE => showLogo() =>')
       return this.$store.state.settings.sidebarLogo
     },
     variables() {
-      console.log('INDEX.VUE => variables() =>')
       return variables
     },
     isCollapse() {
       // 是否折叠
-      console.log('INDEX.VUE => isCollapse() =>')
       return !this.sidebar.opened
     }
   }
