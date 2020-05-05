@@ -95,7 +95,7 @@ export default {
       }).catch(error => {
         this.$message.error(error.message)
       })
-      setTimeout(() => { location.reload() }, 500)
+      setTimeout(() => { location.reload() }, 2000)
     },
     resetForm() {
       this.$emit('closeDialogUpdateUserVisible')

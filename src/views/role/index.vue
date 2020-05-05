@@ -16,10 +16,10 @@
         </el-form>
         <!-- 上面是我从表单里面获取的-->
         <el-card shadow="hover">
-          <el-link v-has="'addRole'" type="primary" @click="dialogAddRoleVisible = true"><i class="el-icon-plus" />增加</el-link>
-          <el-link v-has="'deleteRole'" type="danger" style="margin-left:20px" @click="deleteMultpleRole"><i class="el-icon-delete" />删除</el-link>
-          <el-link v-has="'assignResource'" type="primary" style="margin-left:20px" @click="multipleRoleAllocateResource"><i class="el-icon-circle-plus-outline" />资源分配</el-link>
-          <el-link v-has="'assignUser'" type="primary" style="margin-left:20px" @click="multipleRoleAllocateUser"><i class="el-icon-s-check" />用户分配</el-link>
+          <el-link v-hasPermission="'addRole'" type="primary" @click="dialogAddRoleVisible = true"><i class="el-icon-plus" />增加</el-link>
+          <el-link v-hasPermission="'deleteRole'" type="danger" style="margin-left:20px" @click="deleteMultpleRole"><i class="el-icon-delete" />删除</el-link>
+          <el-link v-hasPermission="'assignResource'" type="primary" style="margin-left:20px" @click="multipleRoleAllocateResource"><i class="el-icon-circle-plus-outline" />资源分配</el-link>
+          <el-link v-hasPermission="'assignUser'" type="primary" style="margin-left:20px" @click="multipleRoleAllocateUser"><i class="el-icon-s-check" />用户分配</el-link>
           <!-- 下面是我从资源表格里面获取的-->
           <el-table
             v-loading="listLoading"
@@ -67,10 +67,10 @@
               label="操作"
             >
               <template slot-scope="scope">
-                <el-link v-has="'updateRole'" type="warning" style="margin-left:20px" @click="updateRole(scope)"><i class="el-icon-edit" /></el-link>
-                <el-link v-has="'deleteRole'" type="danger" style="margin-left:20px" @click="deleteRole(scope)"><i class="el-icon-delete" /></el-link>
-                <el-link v-has="'assignResource'" type="primary" style="margin-left:20px" @click="roleAllocateResource(scope)"><i class="el-icon-circle-plus-outline" /></el-link>
-                <el-link v-has="'assignUser'" type="primary" style="margin-left:20px"><i class="el-icon-s-check" /></el-link>
+                <el-link v-hasPermission="'updateRole'" type="warning" style="margin-left:20px" @click="updateRole(scope)"><i class="el-icon-edit" /></el-link>
+                <el-link v-hasPermission="'deleteRole'" type="danger" style="margin-left:20px" @click="deleteRole(scope)"><i class="el-icon-delete" /></el-link>
+                <el-link v-hasPermission="'assignResource'" type="primary" style="margin-left:20px" @click="roleAllocateResource(scope)"><i class="el-icon-circle-plus-outline" /></el-link>
+                <el-link v-hasPermission="'assignUser'" type="primary" style="margin-left:20px"><i class="el-icon-s-check" /></el-link>
               </template>
             </el-table-column>
           </el-table>
@@ -175,7 +175,7 @@ export default {
               type: 'error',
               message: error.message
             })
-           setTimeout(() => { location.reload() }, 500)
+           setTimeout(() => { location.reload() }, 2000)
         })
   },
   methods: {
@@ -199,7 +199,7 @@ export default {
               type: 'error',
               message: error.message
             })
-           setTimeout(() => { location.reload() }, 500)
+           setTimeout(() => { location.reload() }, 2000)
         })
       this.dialogResourceVisible = true
     },
@@ -218,7 +218,7 @@ export default {
               type: 'error',
               message: error.message
             })
-           setTimeout(() => { location.reload() }, 500)
+           setTimeout(() => { location.reload() }, 2000)
         })  
       }
     },
@@ -237,7 +237,7 @@ export default {
               type: 'error',
               message: error.message
             })
-           setTimeout(() => { location.reload() }, 500)
+           setTimeout(() => { location.reload() }, 2000)
         })
       }
     },
@@ -272,7 +272,7 @@ export default {
               type: 'error',
               message: error.message
             })
-           setTimeout(() => { location.reload() }, 500)
+           setTimeout(() => { location.reload() }, 2000)
         })
 
     },
@@ -299,7 +299,7 @@ export default {
               type: 'error',
               message: error.message
             })
-           setTimeout(() => { location.reload() }, 500)
+           setTimeout(() => { location.reload() }, 2000)
         })
 
     },
@@ -322,7 +322,7 @@ export default {
               type: 'error',
               message: error.message
             })
-           setTimeout(() => { location.reload() }, 500)
+           setTimeout(() => { location.reload() }, 2000)
         })
     },
     handleSelectionChange(val) {
@@ -339,13 +339,13 @@ export default {
               type: 'success',
               message: '删除成功!'
             })
-            setTimeout(() => { location.reload() }, 500)
+            setTimeout(() => { location.reload() }, 2000)
         }).catch(error => {
            this.$message({
               type: 'error',
               message: error.message
             })
-           setTimeout(() => { location.reload() }, 500)
+           setTimeout(() => { location.reload() }, 2000)
         })
 
       }).catch(() => {
@@ -372,10 +372,10 @@ export default {
               type: 'success',
               message: res.message
             })
-            setTimeout(() => { location.reload() }, 500)
+            setTimeout(() => { location.reload() }, 2000)
           }).catch(error => {
             this.$message.error(error.message)
-             setTimeout(() => { location.reload() }, 500)
+             setTimeout(() => { location.reload() }, 2000)
           })
         }).catch(() => {
           this.$message({

@@ -33,8 +33,8 @@
         </el-form>
         <!-- 上面是我从表单里面获取的-->
         <el-card shadow="hover">
-          <el-link v-has="'addResource'" type="primary" @click="dialogAddResourceVisible = true"><i class="el-icon-plus" />增加</el-link>
-          <el-link v-has="'deleteResource'" type="danger" style="margin-left:20px" @click="deleteMultResource"><i class="el-icon-delete" />删除</el-link>
+          <el-link v-hasPermission="'addResource'" type="primary" @click="dialogAddResourceVisible = true"><i class="el-icon-plus" />增加</el-link>
+          <el-link v-hasPermission="'deleteResource'" type="danger" style="margin-left:20px" @click="deleteMultResource"><i class="el-icon-delete" />删除</el-link>
           <!-- 下面是我从资源表格里面获取的-->
           <el-table
             v-loading="listLoading"
@@ -62,8 +62,8 @@
             </el-table-column>
             <el-table-column
               align="center"
-              prop="btnPermissionValue"
-              label="编号"
+              prop="permission"
+              label="资源权限"
               width="120"
               show-overflow-tooltip
             />
@@ -88,7 +88,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                {{ scope.row.resourceType === 1 ? '菜单':'按钮' }}
+                {{ scope.row.resourceType === 1 ? '菜单':'操作' }}
               </template>
             </el-table-column>
             <el-table-column
@@ -116,8 +116,8 @@
               label="动作"
             >
               <template slot-scope="scope">
-                <el-link v-has="'updateResource'" type="warning" style="margin-left:20px" @click="updateResource(scope)"><i class="el-icon-edit" /></el-link>
-                <el-link v-has="'deleteResource'" type="danger" style="margin-left:20px" @click="deleteResource(scope)"><i class="el-icon-delete" /></el-link>
+                <el-link v-hasPermission="'updateResource'" type="warning" style="margin-left:20px" @click="updateResource(scope)"><i class="el-icon-edit" /></el-link>
+                <el-link v-hasPermission="'deleteResource'" type="danger" style="margin-left:20px" @click="deleteResource(scope)"><i class="el-icon-delete" /></el-link>
               </template>
             </el-table-column>
           </el-table>
@@ -220,6 +220,8 @@ export default {
       this.resource = this.createRouterTree(res.data)
     }).catch(error => {
             this.$message.error(error.message)
+             setTimeout(() => { location.reload() }, 2000)
+             
       })
     // 默认获取当前列表,不需要任何父级资源id
     const query = {
@@ -232,6 +234,7 @@ export default {
       this.total = res.data.total
     }).catch(error => {
             this.$message.error(error.message)
+             setTimeout(() => { location.reload() }, 2000)
           })
     this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
     this.listLoading = false
@@ -254,6 +257,7 @@ export default {
         this.total = res.data.total
       }).catch(error => {
             this.$message.error(error.message)
+             setTimeout(() => { location.reload() }, 2000)
           })
       this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
       this.listLoading = false
@@ -274,6 +278,7 @@ export default {
         this.total = res.data.total
       }).catch(error => {
             this.$message.error(error.message)
+             setTimeout(() => { location.reload() }, 2000)
           })
       this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
       this.listLoading = false
@@ -311,6 +316,7 @@ export default {
         this.total = res.data.total
       }).catch(error => {
             this.$message.error(error.message)
+             setTimeout(() => { location.reload() }, 2000)
           })
       this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
       this.listLoading = false
@@ -340,10 +346,10 @@ export default {
                 type: 'success',
                 message: '删除成功!'
               })
-              setTimeout(() => { location.reload() }, 500)
+              setTimeout(() => { location.reload() }, 2000)
           }).catch(error => {
               this.$message.error(error.message)
-              setTimeout(() => { location.reload() }, 500)
+              setTimeout(() => { location.reload() }, 2000)
           })
         }).catch(() => {
           this.$message({
@@ -364,10 +370,10 @@ export default {
                 type: 'success',
                 message: '删除成功!'
               })
-              setTimeout(() => { location.reload() }, 500)
+              setTimeout(() => { location.reload() }, 2000)
           }).catch(error => {
               this.$message.error(error.message)
-              setTimeout(() => { location.reload() }, 500)
+              setTimeout(() => { location.reload() }, 2000)
           })
       }).catch(() => {
         this.$message({

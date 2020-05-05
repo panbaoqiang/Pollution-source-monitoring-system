@@ -155,7 +155,7 @@ export default {
         label: '菜单'
       }, {
         value: 2,
-        label: '按钮'
+        label: '操作'
       }
       ]
     }
@@ -169,7 +169,7 @@ export default {
         type: 'success',
         message: '更新成功!'
       })
-      setTimeout(() => { location.reload() }, 500)
+      setTimeout(() => { location.reload() }, 2000)
     },
     CloseForm() {
       // 关闭窗口
@@ -202,7 +202,7 @@ export default {
               type: 'error',
               message: error.message
             })
-            setTimeout(() => { location.reload() }, 500)
+            setTimeout(() => { location.reload() }, 2000)
          })
 
          
@@ -223,7 +223,7 @@ export default {
               type: 'error',
               message: error.message
             })
-            setTimeout(() => { location.reload() }, 500)
+            setTimeout(() => { location.reload() }, 2000)
          })
       }
     }

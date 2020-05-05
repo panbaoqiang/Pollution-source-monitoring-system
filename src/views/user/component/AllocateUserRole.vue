@@ -99,12 +99,12 @@ export default {
           })
           setTimeout(() => {
             location.reload()
-          }, 500)
+          }, 2000)
         }).catch(error => {
           this.$message.error(error.message)
            setTimeout(() => {
             location.reload()
-          }, 500)
+          }, 2000)
         })
       }).catch(() => {
         this.$message({

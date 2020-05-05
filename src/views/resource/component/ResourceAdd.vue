@@ -149,7 +149,7 @@ export default {
         label: '菜单'
       }, {
         value: 2,
-        label: '按钮'
+        label: '操作'
       }
       ],
       resource: {
@@ -171,13 +171,13 @@ export default {
             type: 'success',
             message: '添加成功!'
           })
-          setTimeout(() => { location.reload() }, 500)
+          setTimeout(() => { location.reload() }, 2000)
       }).catch(error => {
             this.$message({
               type: 'error',
               message: error.message
             })
-            setTimeout(() => { location.reload() }, 500)
+            setTimeout(() => { location.reload() }, 2000)
       })
     },
     CloseForm() {
@@ -221,7 +221,7 @@ export default {
               type: 'error',
               message: error.message
             })
-            setTimeout(() => { location.reload() }, 500)
+             setTimeout(() => { location.reload() }, 2000)
          })
 
          
@@ -242,7 +242,7 @@ export default {
             type: 'error',
               message: error.message
           })
-          setTimeout(() => { location.reload() }, 500)
+           setTimeout(() => { location.reload() }, 2000)
        })
     }
     }

@@ -18,10 +18,10 @@
         </el-form>
         <!-- 上面是我从表单里面获取的-->
         <el-card shadow="hover" >
-          <el-link v-has="'addUser'" type="primary" @click="dialogAddUserVisible = true"><i class="el-icon-plus" />增加</el-link>
-          <el-link v-has="'deleteUser'" type="danger" style="margin-left:20px" @click="deleteMultpleUser"><i class="el-icon-delete" />删除</el-link>
-          <el-link v-has="'allocateUserRole'" type="primary" style="margin-left:20px" @click="allocateUserRole"><i class="el-icon-s-check" />角色分配</el-link>
-          <el-link v-has="'clearUserRole'" type="info" style="margin-left:20px" @click="clearUserRoleByUserIdList"><i class="el-icon-circle-close" />角色清空</el-link>
+          <el-link v-hasPermission="'addUser'" type="primary" @click="dialogAddUserVisible = true"><i class="el-icon-plus" />增加</el-link>
+          <el-link v-hasPermission="'deleteUser'" type="danger" style="margin-left:20px" @click="deleteMultpleUser"><i class="el-icon-delete" />删除</el-link>
+          <el-link v-hasPermission="'allocateUserRole'" type="primary" style="margin-left:20px" @click="allocateUserRole"><i class="el-icon-s-check" />角色分配</el-link>
+          <el-link v-hasPermission="'clearUserRole'" type="info" style="margin-left:20px" @click="clearUserRoleByUserIdList"><i class="el-icon-circle-close" />角色清空</el-link>
           <!-- 下面是我从资源表格里面获取的-->
           <el-table
             v-loading="listLoading"
@@ -102,10 +102,10 @@
               label="操作"
             >
               <template slot-scope="scope">
-                <el-link v-has="'updateUser'" type="warning" style="margin-left:20px" @click="updateUser(scope)"><i class="el-icon-edit" /></el-link>
-                <el-link v-has="'deleteUser'" type="danger" style="margin-left:20px" @click="deleteUser(scope)"><i class="el-icon-delete" /></el-link>
-                <el-link v-has="'allocateUserRole'" type="primary" style="margin-left:20px" @click="allocateSingeleUserRole(scope.row)"><i class="el-icon-s-check" /></el-link>
-               <el-link v-has="'clearUserRole'" type="info" style="margin-left:20px" @click="clearUserRoleByUserId(scope.row)"><i class="el-icon-circle-close" /></el-link>
+                <el-link v-hasPermission="'updateUser'" type="warning" style="margin-left:20px" @click="updateUser(scope)"><i class="el-icon-edit" /></el-link>
+                <el-link v-hasPermission="'deleteUser'" type="danger" style="margin-left:20px" @click="deleteUser(scope)"><i class="el-icon-delete" /></el-link>
+                <el-link v-hasPermission="'allocateUserRole'" type="primary" style="margin-left:20px" @click="allocateSingeleUserRole(scope.row)"><i class="el-icon-s-check" /></el-link>
+               <el-link v-hasPermission="'clearUserRole'" type="info" style="margin-left:20px" @click="clearUserRoleByUserId(scope.row)"><i class="el-icon-circle-close" /></el-link>
               </template>
             </el-table-column>
           </el-table>
@@ -188,6 +188,7 @@ export default {
       this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
     }).catch(error => {
         this.$message.error(error.message)
+         setTimeout(() => { location.reload() }, 2000)
       })
     this.listLoading = false
   },
@@ -204,6 +205,7 @@ export default {
         this.dialogAllocateRoleVisible = true
       }).catch(error => {
         this.$message.error(error.message)
+         setTimeout(() => { location.reload() }, 2000)
       })
     },
     async allocateUserRole() {
@@ -217,6 +219,7 @@ export default {
           this.roleList = res.data
         }).catch(error => {
         this.$message.error(error.message)
+         setTimeout(() => { location.reload() }, 2000)
       })
       }
     },
@@ -237,10 +240,10 @@ export default {
               type: 'success',
               message: res.message
             })
-            setTimeout(() => { location.reload() }, 500)
+            setTimeout(() => { location.reload() }, 2000)
         }).catch(error => {
             this.$message.error(error.message)
-            setTimeout(() => { location.reload() }, 500)
+            setTimeout(() => { location.reload() }, 2000)
           })
         }).catch(() => {
           this.$message({
@@ -261,10 +264,10 @@ export default {
               type: 'success',
               message: res.message
             })
-            setTimeout(() => { location.reload() }, 500)
+            setTimeout(() => { location.reload() }, 2000)
         }).catch(error => {
             this.$message.error(error.message)
-            setTimeout(() => { location.reload() }, 500)
+            setTimeout(() => { location.reload() }, 2000)
           })
         }).catch(() => {
           this.$message({
@@ -302,6 +305,7 @@ export default {
         this.total = res.data.total
       }).catch(error => {
             this.$message.error(error.message)
+             setTimeout(() => { location.reload() }, 2000)
         })
       this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
       this.listLoading = false
@@ -332,6 +336,7 @@ export default {
         this.total = res.data.total
       }).catch(error => {
             this.$message.error(error.message)
+             setTimeout(() => { location.reload() }, 2000)
           })
       this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
       this.listLoading = false
@@ -351,6 +356,7 @@ export default {
         this.total = res.data.total
       }).catch(error => {
             this.$message.error(error.message)
+             setTimeout(() => { location.reload() }, 2000)
           })
       this.totalPageNum = (Math.ceil(this.total / this.pageSize)) * 10
       this.listLoading = false
@@ -376,10 +382,10 @@ export default {
               type: 'success',
               message: res.message
             })
-            setTimeout(() => { location.reload() }, 500)
+            setTimeout(() => { location.reload() }, 2000)
           }).catch(error => {
             this.$message.error(error.message)
-             setTimeout(() => { location.reload() }, 500)
+             setTimeout(() => { location.reload() }, 2000)
           })
         }).catch(() => {
           this.$message({
@@ -400,10 +406,10 @@ export default {
               type: 'success',
               message: res.message
             })
-            setTimeout(() => { location.reload() }, 500)
+            setTimeout(() => { location.reload() }, 2000)
           }).catch(error => {
             this.$message.error(error.message)
-             setTimeout(() => { location.reload() }, 500)
+             setTimeout(() => { location.reload() }, 2000)
           })
       }).catch(() => {
         this.$message({

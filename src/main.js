@@ -14,8 +14,8 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-// 自定义按钮权限指令
-import '@/directive/btnPermission.js'
+// 自定义权限指令
+import '@/directive/permission.js'
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })

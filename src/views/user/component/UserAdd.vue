@@ -99,7 +99,7 @@ export default {
       })
       setTimeout(() => {
         location.reload()
-      }, 500)
+      }, 2000)
     },
     resetForm() {
       this.$emit('closeDialogAddUserVisible')
