@@ -18,7 +18,7 @@
     float: left;
     position: fixed;
     overflow: hidden;
-    height:calc(100vh);
+    max-height:calc(100vh);
     // reset element-ui css
     .horizontal-collapse-transition {
       transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;

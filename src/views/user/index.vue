@@ -422,7 +422,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .time {
     font-size: 13px;
     color: #999;
