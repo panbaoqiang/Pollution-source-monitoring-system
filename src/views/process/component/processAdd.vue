@@ -45,38 +45,119 @@
         <el-row :gutter="50">
           <el-col :span="22" :offset="0">
             <el-form-item label="" prop="leaf">
-                <el-radio v-model="a1" :label="1">AO1</el-radio>
-                <el-radio v-model="a2" :label="2">AO2</el-radio>
-                <el-radio v-model="a3" :label="3">AO3</el-radio>
-                <el-radio v-model="a4" :label="4">AO4</el-radio>
-                <el-radio v-model="a5" :label="5">AO5</el-radio>
-                <el-radio v-model="a6" :label="6">AO6</el-radio>
-                <el-radio v-model="a7" :label="7">AO7</el-radio>
-                <el-radio v-model="a8" :label="8">AO8</el-radio>
-                <el-radio v-model="a9" :label="9">AO9</el-radio>
-                <el-radio v-model="a10" :label="10">AO10</el-radio>
-                <el-radio v-model="a11" :label="11">AO11</el-radio>
-                <el-radio v-model="a12" :label="12">AO12</el-radio>
-                <el-radio v-model="a13" :label="13">AO13</el-radio>
-                <el-radio v-model="a14" :label="14">AO14</el-radio>
-                <el-radio v-model="a15" :label="15">AO15</el-radio>
-                <el-radio v-model="a16" :label="16">AO16</el-radio>
-                <el-radio v-model="a17" :label="17">AO17</el-radio>
-                <el-radio v-model="a18" :label="18">AO18</el-radio>
-                <el-radio v-model="a19" :label="19">AO19</el-radio>
-                <el-radio v-model="a20" :label="20">AO20</el-radio>
-                <el-radio v-model="a21" :label="21">AO21</el-radio>
-                <el-radio v-model="a22" :label="22">AO22</el-radio>
-                <el-radio v-model="a23" :label="23">AO23</el-radio>
-                <el-radio v-model="a24" :label="24">AO24</el-radio>
-                <el-radio v-model="a25" :label="25">AO25</el-radio>
-                <el-radio v-model="a26" :label="26">AO26</el-radio>
-                <el-radio v-model="a27" :label="27">AO27</el-radio>
-                <el-radio v-model="a28" :label="28">AO28</el-radio>
-                <el-radio v-model="a29" :label="29">AO29</el-radio>
-                <el-radio v-model="a30" :label="30">AO30</el-radio>
-                <el-radio v-model="a31" :label="31">AO31</el-radio>
-                <el-radio v-model="a32" :label="32">AO32</el-radio>
+              <el-row>
+                <el-col :span="6">
+                    <el-radio v-model="a1" :label="1">AO1</el-radio>
+                </el-col>
+                <el-col :span="6">
+                     <el-radio v-model="a2" :label="2">AO2</el-radio>
+                </el-col>
+                <el-col :span="6">
+                    <el-radio v-model="a3" :label="3">AO3</el-radio>
+                </el-col>
+                <el-col :span="6">
+                    <el-radio v-model="a4" :label="4">AO4</el-radio>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="6">
+                    <el-radio v-model="a5" :label="5">AO5</el-radio>
+                </el-col>
+                <el-col :span="6">
+                     <el-radio v-model="a6" :label="6">AO6</el-radio>
+                </el-col>
+                <el-col :span="6">
+                    <el-radio v-model="a7" :label="7">AO7</el-radio>
+                </el-col>
+                <el-col :span="6">
+                    <el-radio v-model="a8" :label="8">AO8</el-radio>
+                </el-col>
+              </el-row>                
+              <el-row>
+                <el-col :span="6">
+                    <el-radio v-model="a9" :label="9">AO9</el-radio>
+                </el-col>
+                <el-col :span="6">
+                     <el-radio v-model="a10" :label="10">AO10</el-radio>
+                </el-col>
+                <el-col :span="6">
+                    <el-radio v-model="a11" :label="11">AO11</el-radio>
+                </el-col>
+                <el-col :span="6">
+                     <el-radio v-model="a12" :label="12">AO12</el-radio>
+                </el-col>
+              </el-row>    
+                <el-row>
+                <el-col :span="6">
+                     <el-radio v-model="a13" :label="13">AO13</el-radio>
+                </el-col>
+                <el-col :span="6">
+                    <el-radio v-model="a14" :label="14">AO14</el-radio>
+                </el-col>
+                <el-col :span="6">
+                     <el-radio v-model="a15" :label="15">AO15</el-radio>
+                </el-col>
+                <el-col :span="6">
+                     <el-radio v-model="a16" :label="16">AO16</el-radio>
+                </el-col>
+              </el-row>                  
+                 <el-row>
+                <el-col :span="6">
+                     <el-radio v-model="a17" :label="17">AO17</el-radio>
+                </el-col>
+                <el-col :span="6">
+                    <el-radio v-model="a18" :label="18">AO18</el-radio>
+                </el-col>
+                <el-col :span="6">
+                      <el-radio v-model="a19" :label="19">AO19</el-radio>
+                </el-col>
+                <el-col :span="6">
+                     <el-radio v-model="a20" :label="20">AO20</el-radio>
+                </el-col>
+              </el-row>                
+                  <el-row>
+                <el-col :span="6">
+                      <el-radio v-model="a21" :label="21">AO21</el-radio>
+                </el-col>
+                <el-col :span="6">
+                    <el-radio v-model="a22" :label="22">AO22</el-radio>
+                </el-col>
+                <el-col :span="6">
+                     <el-radio v-model="a23" :label="23">AO23</el-radio>
+                </el-col>
+                <el-col :span="6">
+                     <el-radio v-model="a24" :label="24">AO24</el-radio>
+                </el-col>
+              </el-row>                 
+                
+                <el-row>
+                <el-col :span="6">
+                       <el-radio v-model="a25" :label="25">AO25</el-radio>
+                </el-col>
+                <el-col :span="6">
+                      <el-radio v-model="a26" :label="26">AO26</el-radio>
+                </el-col>
+                <el-col :span="6">
+                     <el-radio v-model="a27" :label="27">AO27</el-radio>
+                </el-col>
+                <el-col :span="6">
+                      <el-radio v-model="a28" :label="28">AO28</el-radio>
+                </el-col>
+              </el-row>               
+                 <el-row>
+                <el-col :span="6">
+                      <el-radio v-model="a29" :label="29">AO29</el-radio>
+                </el-col>
+                <el-col :span="6">
+                     <el-radio v-model="a30" :label="30">AO30</el-radio>
+                </el-col>
+                <el-col :span="6">
+                      <el-radio v-model="a31" :label="31">AO31</el-radio>
+                </el-col>
+                <el-col :span="6">
+                      <el-radio v-model="a32" :label="32">AO32</el-radio>
+                </el-col>
+              </el-row>                                         
             </el-form-item>
           </el-col>
         </el-row>

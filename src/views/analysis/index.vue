@@ -20,10 +20,10 @@
                             </el-table-column>
                 </el-table >
                </div>
-             <div style="margin-top:6px;width:100%;height:300px;background:yellow">
+             <div style="margin-top:1px;width:100%background:yellow">
                     <el-table
                      :row-class-name="tableRowClassName"
-                     height="300px"
+                     height="280px"
                       :data="tableData"
                       border
                       style="width: 100%"
@@ -286,4 +286,12 @@ export default {
   .el-table .success-row {
     background:white;
   }
+  .el-table, .el-table th{
+    padding: 12px !important
+  }
+*::-webkit-scrollbar {width:7px; height:10px; background-color:transparent;} /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+*::-webkit-scrollbar-track {background-color:#f0f6ff;  } /*定义滚动条轨道 内阴影+圆角*/
+*::-webkit-scrollbar-thumb {background-color:#DCDFE6; border-radius:6px;} /*定义滑块 内阴影+圆角*/
+.scrollbarHide::-webkit-scrollbar{display: none}
+.scrollbarShow::-webkit-scrollbar{display: block}
 </style>
