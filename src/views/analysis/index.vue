@@ -154,7 +154,7 @@ export default {
             ch2: '',
             ch3: '',
             ch4: '',
-            ch6: '',
+            ch5: '',
             ch6: '',
           }],
         option:{
