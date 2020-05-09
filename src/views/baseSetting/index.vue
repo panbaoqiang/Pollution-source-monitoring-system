@@ -184,7 +184,6 @@ import { mapGetters } from 'vuex'
     methods: {
       handleClick(tab, event) {
         this.activeName = tab.name
-        console.log(tab.name);
       },
       changeColor(item){
           document.getElementById('a').style.background = "#909399"
