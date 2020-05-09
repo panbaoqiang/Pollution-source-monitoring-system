@@ -278,7 +278,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .el-table .warning-row {
     background: oldlace;
   }
