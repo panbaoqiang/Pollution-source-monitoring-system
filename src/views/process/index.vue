@@ -5,7 +5,7 @@
              <el-button type="primary" style="width:150px;height:60px" @click="dialogAddRProcessVisible = true">新建进程</el-button>
         </el-col>
         <el-col :span="6">
-             <el-button type="primary" style="width:150px;height:60px" plain :disabled="!value">自动排程</el-button>
+             <el-button type="primary" style="width:150px;height:60px"  plain :disabled="!value" @click="dialogAddVisible = true" >自动排程</el-button>
         </el-col>
         <el-col :span="6">
              <el-button type="primary" style="width:150px;height:60px" plain :disabled="!value">手动排程</el-button>
@@ -67,25 +67,28 @@
             </el-table>
     </div>
      <processAdd :dialogAddRProcessVisible="dialogAddRProcessVisible" @closeDialogAddProcessVisible="dialogAddRProcessVisible=false"/>
+     <schedulingAdd :dialogAddVisible="dialogAddVisible" @closeDialogAddSchedulingVisible="dialogAddVisible=false"/>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import processAdd from './component/processAdd'
+import schedulingAdd from './component/schedulingAdd'
 export default {
   name: 'Process',
   components:{
-     processAdd
+     processAdd,schedulingAdd
   },
   methods:{
     cellStyle({ row, rowIndex, columnIndex }) {
       return 'height:40px;'
-    },
+    }
   },
     data() {
       return {
         dialogAddRProcessVisible:false,
+        dialogAddVisible:false,
         value: false,
           tableData: [{
           type: '分析进程',
