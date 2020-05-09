@@ -96,7 +96,7 @@ export default {
     data() {
       return {
         dialogAtlasVisible:false,
-        value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
+        value1: [new Date(2019, 10, 10, 10, 10), new Date(2019, 10, 11, 10, 10)],
           tableData: [{
           time: '2020-04-23 15:32:24.0',
           name: '甲烷',

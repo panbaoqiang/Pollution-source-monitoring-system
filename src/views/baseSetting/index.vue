@@ -32,7 +32,41 @@
         <div>
           <p style="font-size:25px;color:rgba(42, 130, 228, 1);font-weight:800;">通道管理</p>
         </div>
-       
+      <el-row>
+          <el-col :span="24" >
+              <el-table
+              :data="tableData"
+              stripe
+              >
+              <el-table-column
+                prop="name"
+                label="通道名称"
+
+                 align="center"
+                >
+              </el-table-column>
+              <el-table-column
+                prop="chemcial"
+                label="测量化合物"
+
+                 align="center"
+                >
+              </el-table-column>
+              <el-table-column
+                prop="status"
+                label="状态"
+                 align="center"
+                >
+              </el-table-column>
+              <el-table-column
+                label="操作"
+                 align="center"
+                >
+                   <el-link  type="warning" style="margin-left:20px" ><i class="el-icon-edit" />编辑</el-link>
+              </el-table-column>
+            </el-table>
+          </el-col>
+      </el-row>
     </el-tab-pane>
     <el-tab-pane label="化合物管理" name="化合物管理">
         <div class="icon" style="float:left;color:rgba(42, 130, 228, 1);margin-right:15px;margin-top:1px;">
@@ -41,6 +75,54 @@
         <div>
           <p style="font-size:25px;color:rgba(42, 130, 228, 1);font-weight:800;">化合物管理</p>
         </div> 
+          <el-link  type="primary" ><i class="el-icon-plus" />增加化合物</el-link>
+           <el-row>
+          <el-col :span="24" >
+              <el-table
+              :data="tableData2"
+              stripe
+              >
+              <el-table-column
+                prop="name"
+                label="通道名称"
+
+                 align="center"
+                >
+              </el-table-column>
+              <el-table-column
+                prop="unit"
+                label="单位"
+
+                 align="center"
+                >
+              </el-table-column>
+              <el-table-column
+                prop="start"
+                label="开始秒数"
+                 align="center"
+                >
+              </el-table-column>
+              <el-table-column
+                prop="end"
+                label="结束秒数"
+                 align="center"
+                >
+              </el-table-column>
+              <el-table-column
+                  prop="limit"
+                  label="浓度上限"
+                  align="center"
+                >
+              </el-table-column>
+              <el-table-column
+                label="操作"
+                 align="center"
+                >
+                   <el-link  type="warning" style="margin-left:20px" ><i class="el-icon-edit" />编辑</el-link>
+              </el-table-column>
+            </el-table>
+          </el-col>
+      </el-row>
     </el-tab-pane>
   </el-tabs>
 
@@ -52,7 +134,46 @@ import { mapGetters } from 'vuex'
   export default {
     data() {
       return {
-        activeName: '挡位切换'
+        activeName: '挡位切换',
+          tableData: [{
+          name: '通道1',
+          chemcial: '甲烷，乙烷',
+          status:'开启'
+        }, {
+          name: '通道2',
+          chemcial: '甲烷，乙烷',
+          status:'开启'
+        }, {
+          name: '通道3',
+          chemcial: '甲烷，乙烷',
+          status:'开启'
+        },
+        {
+          name: '通道4',
+          chemcial: '甲烷，乙烷',
+          status:'开启'
+        },{
+          name: '通道5',
+          chemcial: '甲烷，乙烷',
+          status:'开启'
+        },{
+          name: '通道6',
+          chemcial: '甲烷，乙烷',
+          status:'开启'
+        }],
+         tableData2: [{
+          name: '甲烷',
+          unit: 'ppm',
+          start:'20',
+          end:'30',
+          limit: '6.0'
+        }, {
+          name: '乙烷',
+          unit: 'ppm',
+          start:'30',
+          end:'40',
+          limit: '6.0'
+        }]
       };
     },
     created(){
